@@ -1,0 +1,28 @@
+#logo {
+  height: 100px;
+  width: 160px;
+}
+.menu {
+  margin-bottom: 10px;
+}
+.index {
+  margin-bottom: 5px;
+}
+.Footer {
+  text-align: left;
+  color: black;
+  font-size: 13px;
+}
+
+footer {
+  text-align: right;
+  color: black;
+  font-size: 13px;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+.blog1 {
+  margin-right: 25px;
+}
