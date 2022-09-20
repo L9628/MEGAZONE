@@ -1,6 +1,7 @@
 function Price() {
   return (
     <>
+      <h1>서비스 가격 정책</h1>
       <table class="table">
         <thead>
           <tr>

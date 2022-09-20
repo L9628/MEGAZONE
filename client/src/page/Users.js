@@ -88,6 +88,7 @@ function Users() {
   };
   return (
     <>
+      <h1>가입자 관리</h1>
       <div>
         <div>
           회사 이름

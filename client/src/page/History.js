@@ -1,6 +1,15 @@
+import axios from "axios";
+
 function History() {
+  const handleChargeCash = () => {
+    axios.post("http://localhost:5000/histories", {}).then(() => {});
+  };
+  const handleUseService = () => {};
   return (
     <>
+      <h1>충전 및 지출 이력</h1>
+      <button onClick={handleChargeCash}>충전하기</button>
+      <button onClick={handleUseService}>서비스 이용하기</button>
       <table class="table">
         <thead>
           <tr>
