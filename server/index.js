@@ -17,9 +17,8 @@ mongoose
   .catch((err) => console.log(err));
 
 const corsOptions = {
-  origin: true,
+  origin: "*",
   credentials: true,
-  // optionSuccessStatus: 200,
   method: ["GET", "POST", "DELETE", "PUT"],
 };
 

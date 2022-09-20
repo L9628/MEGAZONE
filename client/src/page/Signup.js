@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Redirect, Link, useHistory } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
 
 function Signup() {
   const [companyInfo, setCompanyInfo] = useState({
@@ -13,7 +10,6 @@ function Signup() {
     email: "",
   });
   const [errMsg, setErrMsg] = useState("");
-  const history = useHistory();
   const handleInputValue = (key) => (e) => {
     setCompanyInfo({ ...companyInfo, [key]: e.target.value });
   };
@@ -28,11 +24,11 @@ function Signup() {
     } else {
       axios
         .post(
-          "http://localhost:5000/company/signup",
+          "/auth/signup",
           {
             companyId: companyId,
-            password: password,
             companyName: companyName,
+            password: password,
             email: email,
           },
           {

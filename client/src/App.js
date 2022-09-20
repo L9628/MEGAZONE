@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Header from "./Header";
 import Footer from "./Footer";
-import Users from "./page/Users";
+import Companies from "./page/Companies";
 import History from "./page/History";
 import Price from "./page/Price";
 import Signup from "./page/Signup";
@@ -38,7 +38,7 @@ function App() {
         <div className="page">
           <Switch>
             <Route exact path="/">
-              <Users />
+              <Companies />
             </Route>
             <Route path="/history">
               <History />

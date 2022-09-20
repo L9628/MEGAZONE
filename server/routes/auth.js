@@ -10,17 +10,6 @@ router.post("/signup", async (req, res) => {
     password: req.body.password,
   });
 
-  const company = await Company.find();
-  if (
-    !company.filter((el) =>
-      el.companyId === newCompany.companyId ? false : true
-    )
-  ) {
-    return res.status(401).json({
-      message: "중복되는 아이디가 있습니다. 다른 아이디를 사용해주세요",
-    });
-  }
-
   try {
     const savedCompany = await newCompany.save();
     res.status(201).json({
@@ -45,10 +34,20 @@ router.post("/login", async (req, res) => {
     if (req.body.password !== company.password) {
       return res.status(401).json({ message: "패스워드를 다시 확인해주세요." });
     }
-
-    res.status(200).json({ message: "성공적으로 로그인 되었습니다!" });
+    res
+      .status(200)
+      .json({ data: company, message: "성공적으로 로그인 되었습니다!" });
   } catch (err) {
     console.log(err);
+    res.status(500).json(err);
+  }
+});
+
+//LOGOUT
+router.get("/logout", (req, res) => {
+  try {
+    return res.status(200).json({ message: "로그아웃에 성공했습니다" });
+  } catch (err) {
     res.status(500).json(err);
   }
 });

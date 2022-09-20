@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
-function Login({ companyInfo, setCompanyInfo, handleLoginSuccess }) {
+function Login({ setCompanyInfo, handleLoginSuccess }) {
   const [loginInfo, setLoginInfo] = useState({
     companyId: "",
     password: "",
@@ -12,17 +11,18 @@ function Login({ companyInfo, setCompanyInfo, handleLoginSuccess }) {
     setLoginInfo({ ...loginInfo, [key]: e.target.value });
   };
   const handleLogin = () => {
+    console.log(loginInfo);
     const { companyId, password } = loginInfo;
     if (!companyId || !password) {
       setErrMsg("Company ID와 password를 입력해주세요.");
     } else {
       axios
-        .post("http://localhost:5000/company/login", loginInfo, {
+        .post("/auth/login", loginInfo, {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         })
         .then((res) => {
-          handleLoginSuccess(res);
+          handleLoginSuccess(res.data.data);
         });
     }
   };
