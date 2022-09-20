@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Mypage({ company, companyInfo, handleLogout }) {
+function Mypage({ companyInfo, handleLogout }) {
   const { companyName } = companyInfo;
   return (
     <div>
