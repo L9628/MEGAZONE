@@ -1,44 +1,48 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Companies() {
-  const companyInfo = [];
-  // const companyInfo = [
-  //   {
-  //     email: "sse@samsung.com",
-  //     companyName: "삼성전자",
-  //     companyId: "samsungelec",
-  //   },
-  //   { email: "lge@lg.com", companyName: "LG전자", companyId: "lgelec" },
-  //   { email: "apple@apple.com", companyName: "애플", companyId: "appleelec" },
-  //   {
-  //     email: "hwawei@hwawei.com",
-  //     companyName: "화웨이",
-  //     companyId: "hwaweielec",
-  //   },
-  //   { email: "dell@dell.com", companyName: "델", companyId: "dellelec" },
-  //   {
-  //     email: "hitachi@hitachi.com",
-  //     companyName: "히타치",
-  //     companyId: "hitachielec",
-  //   },
-  //   { email: "sony@sony.com", companyName: "소니", companyId: "sonyelec" },
-  //   { email: "intel@intel.com", companyName: "인텔", companyId: "intelelec" },
-  //   {
-  //     email: "panasonic@panasonic.com",
-  //     companyName: "파나소닉",
-  //     companyId: "panasonicelec",
-  //   },
-  //   { email: "hp@hp.com", companyName: "HP", companyId: "hpelec" },
-  // ];
+  // const companyInfo = [];
+  const companyInfo = [
+    {
+      email: "sse@samsung.com",
+      companyName: "삼성전자",
+      companyId: "samsungelec",
+    },
+    { email: "lge@lg.com", companyName: "LG전자", companyId: "lgelec" },
+    { email: "apple@apple.com", companyName: "애플", companyId: "appleelec" },
+    {
+      email: "hwawei@hwawei.com",
+      companyName: "화웨이",
+      companyId: "hwaweielec",
+    },
+    { email: "dell@dell.com", companyName: "델", companyId: "dellelec" },
+    {
+      email: "hitachi@hitachi.com",
+      companyName: "히타치",
+      companyId: "hitachielec",
+    },
+    { email: "sony@sony.com", companyName: "소니", companyId: "sonyelec" },
+    { email: "intel@intel.com", companyName: "인텔", companyId: "intelelec" },
+    {
+      email: "panasonic@panasonic.com",
+      companyName: "파나소닉",
+      companyId: "panasonicelec",
+    },
+    { email: "hp@hp.com", companyName: "HP", companyId: "hpelec" },
+  ];
+
   axios
     .get("/auth", {
       headers: { "Content-Type": "application/json" },
       withCredentials: true,
     })
     .then((res) => {
-      console.log(res.data);
-      companyInfo = res.data;
+      for (let company of res.data) {
+        // console.log(company);
+        companyInfo.push(company);
+      }
+      // console.log(companyInfo);
     });
 
   const [Selected, setSelected] = useState("");
@@ -51,6 +55,7 @@ function Companies() {
     if (e === "") {
       let arr = [];
       for (let company of companyInfo) {
+        console.log(company);
         arr.push(
           <tr>
             <td>{company.email}</td>
@@ -59,6 +64,7 @@ function Companies() {
           </tr>
         );
       }
+      console.log(arr);
       return arr;
     }
     let arr = [];

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 function Login({ setCompanyInfo, handleLoginSuccess }) {
   const [loginInfo, setLoginInfo] = useState({
@@ -47,6 +48,11 @@ function Login({ setCompanyInfo, handleLoginSuccess }) {
         <button className="login-btn" onClick={handleLogin}>
           로그인
         </button>
+      </div>
+      <div className="signup">
+        <Link to="/signup">
+          <button>회원 가입</button>
+        </Link>
       </div>
       <div className="alert-box">{errMsg}</div>
     </div>

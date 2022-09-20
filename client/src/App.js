@@ -3,8 +3,9 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Companies from "./page/Companies";
 import History from "./page/History";
-import Price from "./page/Price";
+import Service from "./page/Service";
 import Signup from "./page/Signup";
+import Charge from "./page/Charge";
 import Sidebar from "./login/Sidebar";
 
 function App() {
@@ -18,11 +19,6 @@ function App() {
           <div id="login">
             <Sidebar />
           </div>
-          <div className="signup">
-            <Link to="/signup">
-              <button>회원 가입</button>
-            </Link>
-          </div>
           <div className="menu">
             <div className="index">
               <Link to="/">가입자 관리</Link>
@@ -31,7 +27,7 @@ function App() {
               <Link to="/history">충전 및 지출 이력</Link>
             </div>
             <div className="index">
-              <Link to="/price">서비스 가격 정책</Link>
+              <Link to="/service">서비스 가격 정책 및 이용</Link>
             </div>
           </div>
         </div>
@@ -43,11 +39,14 @@ function App() {
             <Route path="/history">
               <History />
             </Route>
-            <Route path="/price">
-              <Price />
+            <Route path="/service">
+              <Service />
             </Route>
             <Route path="/signup">
               <Signup />
+            </Route>
+            <Route path="/charge">
+              <Charge />
             </Route>
           </Switch>
         </div>
