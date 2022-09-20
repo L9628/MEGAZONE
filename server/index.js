@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const historiesRoute = require("./routes/histories");
 const servicesRoute = require("./routes/services");
+const authRoute = require("./routes/auth");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(express());
 app.use(express.json());
 app.use("/histories", historiesRoute);
 app.use("/services", servicesRoute);
+app.use("/auth", authRoute);
 app.use(cors(corsOptions));
 
 app.listen(5000, () => {
