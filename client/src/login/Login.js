@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import action from "../redux/action";
 import { Link } from "react-router-dom";
 
-function Login({ setCompanyInfo, handleLoginSuccess }) {
-  const [loginInfo, setLoginInfo] = useState({
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setCompanyId: (companyId) => dispatch(action.setCompanyId(companyId)),
+  };
+};
+
+function Login({ handleLoginSuccess }) {
+  const [companyId, setCompanyId] = useState({
     companyId: "",
+  });
+  const [password, setPassword] = useState({
     password: "",
   });
   const [errMsg, setErrMsg] = useState("");
-  const handleInputValue = (key) => (e) => {
-    setLoginInfo({ ...loginInfo, [key]: e.target.value });
+  const handleCompanyId = (key) => (e) => {
+    setCompanyId({ ...companyId, [key]: e.target.value });
+  };
+  const handlePassword = (key) => (e) => {
+    setPassword({ ...password, [key]: e.target.value });
   };
   const handleLogin = () => {
-    console.log(loginInfo);
-    const { companyId, password } = loginInfo;
+    const loginInfo = { ...companyId, ...password };
     if (!companyId || !password) {
       setErrMsg("Company ID와 password를 입력해주세요.");
     } else {
@@ -34,14 +46,14 @@ function Login({ setCompanyInfo, handleLoginSuccess }) {
         <input
           placeholder="companyId"
           type="string"
-          onChange={handleInputValue("companyId")}
+          onChange={handleCompanyId("companyId")}
         />
       </div>
       <div>
         <input
           placeholder="password"
           type="password"
-          onChange={handleInputValue("password")}
+          onChange={handlePassword("password")}
         />
       </div>
       <div>
@@ -58,4 +70,4 @@ function Login({ setCompanyInfo, handleLoginSuccess }) {
     </div>
   );
 }
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

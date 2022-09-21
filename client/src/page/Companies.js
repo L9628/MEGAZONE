@@ -2,49 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Companies() {
-  // const companyInfo = [];
-  const companyInfo = [
-    {
-      email: "sse@samsung.com",
-      companyName: "삼성전자",
-      companyId: "samsungelec",
-    },
-    { email: "lge@lg.com", companyName: "LG전자", companyId: "lgelec" },
-    { email: "apple@apple.com", companyName: "애플", companyId: "appleelec" },
-    {
-      email: "hwawei@hwawei.com",
-      companyName: "화웨이",
-      companyId: "hwaweielec",
-    },
-    { email: "dell@dell.com", companyName: "델", companyId: "dellelec" },
-    {
-      email: "hitachi@hitachi.com",
-      companyName: "히타치",
-      companyId: "hitachielec",
-    },
-    { email: "sony@sony.com", companyName: "소니", companyId: "sonyelec" },
-    { email: "intel@intel.com", companyName: "인텔", companyId: "intelelec" },
-    {
-      email: "panasonic@panasonic.com",
-      companyName: "파나소닉",
-      companyId: "panasonicelec",
-    },
-    { email: "hp@hp.com", companyName: "HP", companyId: "hpelec" },
-  ];
-
-  axios
-    .get("/auth", {
-      headers: { "Content-Type": "application/json" },
-      withCredentials: true,
-    })
-    .then((res) => {
-      for (let company of res.data) {
-        // console.log(company);
-        companyInfo.push(company);
-      }
-      // console.log(companyInfo);
-    });
-
+  const [companies, setCompanies] = useState([]);
+  useEffect(() => {
+    axios
+      .get("/auth", {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setCompanies(res.data);
+      });
+  }, []);
   const [Selected, setSelected] = useState("");
 
   const handleSelect = (e) => {
@@ -54,7 +22,7 @@ function Companies() {
   const companiesInfo = (e) => {
     if (e === "") {
       let arr = [];
-      for (let company of companyInfo) {
+      for (let company of companies) {
         console.log(company);
         arr.push(
           <tr>
@@ -68,7 +36,7 @@ function Companies() {
       return arr;
     }
     let arr = [];
-    let filteredCompanies = companyInfo.filter(
+    let filteredCompanies = companies.filter(
       (x) => x.companyName === e || x.companyId === e
     );
     for (let company of filteredCompanies) {
@@ -89,7 +57,7 @@ function Companies() {
         <div>
           회사 이름
           <select onChange={handleSelect} value={Selected}>
-            {companyInfo.map((item) => (
+            {companies.map((item) => (
               <option value={item.companyName} key={item.companyName}>
                 {item.companyName}
               </option>
@@ -99,7 +67,7 @@ function Companies() {
         <div>
           회사 아이디
           <select onChange={handleSelect} value={Selected}>
-            {companyInfo.map((item) => (
+            {companies.map((item) => (
               <option value={item.companyId} key={item.companyId}>
                 {item.companyId}
               </option>

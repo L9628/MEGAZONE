@@ -17,7 +17,7 @@ function Mypage({ companyInfo, handleLogout }) {
         </button>
         <div>
           <Link to="/charge">
-            <button>캐시충전</button>
+            <button>캐시 충전</button>
           </Link>
         </div>
       </div>

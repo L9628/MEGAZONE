@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
 //GET HISTORY
 router.get("/:id", async (req, res) => {
   try {
-    const history = await History.findById(req.params.id);
+    const history = await History.find({ companyId: req.params.id });
     res.status(200).json(history);
   } catch (err) {
     res.status(500).json(err);

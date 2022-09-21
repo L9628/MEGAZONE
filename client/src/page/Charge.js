@@ -1,29 +1,39 @@
 import axios from "axios";
-import { useState } from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
-function Charge() {
+const mapStateToProps = (state) => {
+  return {
+    // companyId: state.companyId,
+  };
+};
+
+function Charge({ companyId }) {
+  console.log(companyId);
   const [chargeInfo, setChargeInfo] = useState({
-    companyId: "",
-    chargeAmount: 0,
+    companyId: companyId,
+    lastUpdated: "",
+    cashChargedDate: 0,
+    cashChargedAmount: 0,
   });
   const handleInputValue = (key) => (e) => {
     setChargeInfo({ [key]: e.target.value });
   };
   const handleOnCharge = () => {
-    // axios
-    //   .post("/charge", chargeInfo, {
-    //     headers: { "Content-Type": "application/json" },
-    //     withCredentials: true,
-    //   })
-    //   .then(() => {
-    //     window.location.href = "/";
-    // window.alert("충전이 완료되었습니다!");
-    //   });
+    axios
+      .post("/histories", chargeInfo, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then(() => {
+        window.location.href = "/";
+        window.alert("충전이 완료되었습니다!");
+      });
   };
   return (
     <>
       <form onSubmit={(e) => e.preventDefault()}>
-        <h1>충전 하기</h1>
+        <h1>캐시 충전</h1>
         <input
           type="chargeAmount"
           placeholder="충전하실 금액"
@@ -37,4 +47,4 @@ function Charge() {
   );
 }
 
-export default Charge;
+export default connect(mapStateToProps)(Charge);
