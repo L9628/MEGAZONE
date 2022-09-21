@@ -19,7 +19,12 @@
 .index {
   margin-bottom: 10px;
 }
-
+.hisThead {
+  font-size: 14px;
+}
+.hisTbody {
+  text-align: center;
+}
 .Footer {
   text-align: left;
   color: black;

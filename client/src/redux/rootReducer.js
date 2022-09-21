@@ -5,7 +5,7 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case "SET_COMPANYID":
-      return { ...state, ompanyId: action.payload };
+      return { ...state, companyId: action.payload };
   }
 };
 

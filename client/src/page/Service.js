@@ -68,24 +68,9 @@ function Service({ companyId }) {
         withCredentials: true,
       })
       .then((res) => {
-        console.log(res.data[res.data.length - 1]);
+        // console.log(res.data[res.data.length - 1]);
         const data = res.data[res.data.length - 1];
-        setHistory((prevState) => {
-          let curState = { ...prevState };
-          // curState.companyId = data.companyId;
-          // curState.currentCoin = data.currentCoin;
-          // curState.currentCash = data.currentCash;
-          // curState.currentBonus = data.currentBonus;
-          // curState.lastUpdated = data.lastUpdated;
-          // curState.cashChargedDate = data.cashChargedDate;
-          // curState.cashChargedAmount = data.cashChargedAmount;
-          // curState.bonusChargedDate = data.bonusChargedDate;
-          // curState.bonusChargedAmount = data.bonusChargedAmount;
-          // curState.coinDeducted = data.coinDeducted;
-          // curState.serviceName = data.serviceName;
-          // curState.coinDeductedDate = data.coinDeductedDate;
-          // curState.deductionResult = data.deductionResult;
-        });
+        setHistory(Object.assign({}, data));
         console.log(history);
       });
     axios
@@ -113,9 +98,9 @@ function Service({ companyId }) {
             <tr>
               <td>{service.name}</td>
               <td>{service.price}</td>
-              <button onClick={handleOnUse(service.name, service.price)}>
+              {/* <button onClick={handleOnUse(service.name, service.price)}>
                 이용하기
-              </button>
+              </button> */}
             </tr>
           ))}
         </tbody>
