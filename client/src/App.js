@@ -5,8 +5,8 @@ import Companies from "./page/Companies";
 import History from "./page/History";
 import Service from "./page/Service";
 import Signup from "./page/Signup";
-import Charge from "./page/Charge";
-import Sidebar from "./login/Sidebar";
+import Charge from "./sidebar/Charge";
+import Sidebar from "./sidebar/Sidebar";
 
 function App() {
   return (

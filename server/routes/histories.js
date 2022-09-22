@@ -3,7 +3,9 @@ const History = require("../models/history");
 
 //CREATE HISTORY
 router.post("/", async (req, res) => {
+  // console.log(req.body);
   const newHistory = new History(req.body);
+  console.log(newHistory);
   try {
     const savedHistory = await newHistory.save();
     res.status(200).json(savedHistory);
