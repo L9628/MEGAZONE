@@ -27,7 +27,7 @@ function App() {
               <Link to="/history">충전 및 지출 이력</Link>
             </div>
             <div className="index">
-              <Link to="/service">서비스 가격 정책 및 이용</Link>
+              <Link to="/service">서비스 가격 정책</Link>
             </div>
           </div>
         </div>

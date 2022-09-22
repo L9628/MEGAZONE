@@ -64,46 +64,55 @@ function Purchase({ companyInfo }) {
           currentBonus: data.currentBonus,
           lastUpdated: data.lastUpdated,
           cashChargedDate: data.cashChargedDate,
-          cashChargedAmount: data.cashChargedAmount,
+          cashChargedAmount: 0,
           bonusChargedDate: data.bonusChargedDate,
-          bonusChargedAmount: data.bonusChargedAmount,
+          bonusChargedAmount: 0,
           coinDeducted: data.coinDeducted,
-          serviceName: data.serviceName,
+          serviceName: "",
           coinDeductedDate: data.coinDeductedDate,
-          deductionResult: data.deductionResult,
+          deductionResult: "",
         });
       });
   }, []);
   const handleOnPurchase = () => {
     axios
-      .post(
-        "/histories",
-        {
-          companyId: history.companyId,
-          currentCoin:
-            Number(history.currentCoin) -
-            Number(purchaseInfo.cashChargedAmount),
-          currentCash:
-            Number(history.currentCash) -
-            Number(purchaseInfo.cashChargedAmount),
-          currentBonus: history.currentBonus,
-          lastUpdated: dateStr + " " + timeStr,
-          cashChargedDate: history.cashChargedDate,
-          cashChargedAmount: history.cashChargedAmount,
-          bonusChargedDate: history.bonusChargedDate,
-          bonusChargedAmount: history.bonusChargedAmount,
-          coinDeducted: Number(purchaseInfo.coinDeducted),
-          serviceName: purchaseInfo.serviceName,
-          coinDeductedDate: dateStr + " " + timeStr,
-          deductionResult: "Success",
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
+      .get("/services/" + purchaseInfo.serviceName, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((res) => {
+        if (!res.data[0]) window.alert("올바른 서비스 이름을 입력해주세요");
+        else if (history.currentCoin === 0)
+          window.alert("코인이 부족합니다. 충전해주세요");
+        else {
+          const coinDeducted = res.data[0].price;
+          axios
+            .post(
+              "/histories",
+              {
+                companyId: history.companyId,
+                currentCoin: Number(history.currentCoin) + Number(coinDeducted),
+                currentCash: Number(history.currentCash) + Number(coinDeducted),
+                currentBonus: history.currentBonus,
+                lastUpdated: dateStr + " " + timeStr,
+                cashChargedDate: history.cashChargedDate,
+                cashChargedAmount: history.cashChargedAmount,
+                bonusChargedDate: history.bonusChargedDate,
+                bonusChargedAmount: history.bonusChargedAmount,
+                coinDeducted: Number(coinDeducted),
+                serviceName: purchaseInfo.serviceName,
+                coinDeductedDate: dateStr + " " + timeStr,
+                deductionResult: "Success",
+              },
+              {
+                headers: { "Content-Type": "application/json" },
+                withCredentials: true,
+              }
+            )
+            .then(() => {
+              window.alert("서비스 구매가 완료되었습니다!");
+            });
         }
-      )
-      .then(() => {
-        window.alert("서비스 구매가 완료되었습니다!");
       });
   };
   return (

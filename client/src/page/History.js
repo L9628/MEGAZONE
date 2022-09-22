@@ -72,11 +72,19 @@ function History() {
       <h3>
         회사 아이디
         <select onChange={handleSelect} value={Selected}>
-          {histories.map((item) => (
-            <option value={item.companyId} key={item.companyId}>
-              {item.companyId}
-            </option>
-          ))}
+          {histories
+            .filter((item, i) => {
+              return (
+                histories.findIndex((item2, j) => {
+                  return item.companyId === item2.companyId;
+                }) === i
+              );
+            })
+            .map((item) => (
+              <option value={item.companyId} key={item.companyId}>
+                {item.companyId}
+              </option>
+            ))}
         </select>
       </h3>
       <table class="table">

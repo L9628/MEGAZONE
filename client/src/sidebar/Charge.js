@@ -46,7 +46,7 @@ function Charge({ companyInfo }) {
   const handleInputValue = (key) => (e) => {
     setChargeInfo({ [key]: e.target.value });
   };
-
+  const [refresh, setRefresh] = useState(true);
   useEffect(() => {
     axios
       .get("/histories/" + companyInfo.companyId, {
@@ -55,7 +55,6 @@ function Charge({ companyInfo }) {
       })
       .then((res) => {
         const data = res.data[res.data.length - 1];
-        console.log(data);
         setHistory({
           companyId: data.companyId,
           currentCoin: data.currentCoin,
@@ -63,47 +62,87 @@ function Charge({ companyInfo }) {
           currentBonus: data.currentBonus,
           lastUpdated: data.lastUpdated,
           cashChargedDate: data.cashChargedDate,
-          cashChargedAmount: data.cashChargedAmount,
+          cashChargedAmount: 0,
           bonusChargedDate: data.bonusChargedDate,
           bonusChargedAmount: data.bonusChargedAmount,
-          coinDeducted: data.coinDeducted,
-          serviceName: data.serviceName,
+          coinDeducted: 0,
+          serviceName: "",
           coinDeductedDate: data.coinDeductedDate,
-          deductionResult: data.deductionResult,
+          deductionResult: "",
         });
       });
-  }, []);
+  }, [refresh]);
 
   const handleOnCharge = () => {
-    console.log("handleOncharge", history);
-    axios
-      .post(
-        "/histories",
-        {
-          companyId: history.companyId,
-          currentCoin:
-            Number(history.currentCoin) + Number(chargeInfo.cashChargedAmount),
-          currentCash:
-            Number(history.currentCash) + Number(chargeInfo.cashChargedAmount),
-          currentBonus: history.currentBonus,
-          lastUpdated: dateStr + " " + timeStr,
-          cashChargedDate: dateStr + " " + timeStr,
-          cashChargedAmount: Number(chargeInfo.cashChargedAmount),
-          bonusChargedDate: history.bonusChargedDate,
-          bonusChargedAmount: history.bonusChargedAmount,
-          coinDeducted: history.coinDeducted,
-          serviceName: history.serviceName,
-          coinDeductedDate: history.coinDeductedDate,
-          deductionResult: history.deductionResult,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      )
-      .then(() => {
-        window.alert("충전이 완료되었습니다!");
-      });
+    setRefresh(!refresh);
+    if (chargeInfo.cashChargedAmount < 100)
+      window.alert("금액은 100이상 부터 충전 가능합니다");
+    else {
+      if (history.lastUpdated === "") {
+        axios
+          .post(
+            "/histories",
+            {
+              companyId: companyInfo.companyId,
+              currentCoin:
+                Number(history.currentCoin) +
+                Number(chargeInfo.cashChargedAmount) +
+                200,
+              currentCash:
+                Number(history.currentCash) +
+                Number(chargeInfo.cashChargedAmount),
+              currentBonus: Number(history.currentBonus) + 200,
+              lastUpdated: dateStr + " " + timeStr,
+              cashChargedDate: dateStr + " " + timeStr,
+              cashChargedAmount: Number(chargeInfo.cashChargedAmount),
+              bonusChargedDate: dateStr + " " + timeStr,
+              bonusChargedAmount: 200,
+              coinDeducted: history.coinDeducted,
+              serviceName: history.serviceName,
+              coinDeductedDate: history.coinDeductedDate,
+              deductionResult: history.deductionResult,
+            },
+            {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            }
+          )
+          .then(() => {
+            window.alert("충전이 완료되었습니다!");
+          });
+      } else {
+        axios
+          .post(
+            "/histories",
+            {
+              companyId: companyInfo.companyId,
+              currentCoin:
+                Number(history.currentCoin) +
+                Number(chargeInfo.cashChargedAmount),
+              currentCash:
+                Number(history.currentCash) +
+                Number(chargeInfo.cashChargedAmount),
+              currentBonus: history.currentBonus,
+              lastUpdated: dateStr + " " + timeStr,
+              cashChargedDate: dateStr + " " + timeStr,
+              cashChargedAmount: Number(chargeInfo.cashChargedAmount),
+              bonusChargedDate: history.bonusChargedDate,
+              bonusChargedAmount: history.bonusChargedAmount,
+              coinDeducted: history.coinDeducted,
+              serviceName: history.serviceName,
+              coinDeductedDate: history.coinDeductedDate,
+              deductionResult: history.deductionResult,
+            },
+            {
+              headers: { "Content-Type": "application/json" },
+              withCredentials: true,
+            }
+          )
+          .then(() => {
+            window.alert("충전이 완료되었습니다!");
+          });
+      }
+    }
   };
 
   // server => client 로 데이터 넘겨줘서 client에서 계산해서 server로 넘기는 형식인데
