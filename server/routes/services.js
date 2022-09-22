@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
 //GET SERVICE
 router.get("/:id", async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id);
+    const service = await Service.find({ name: req.params.id });
     res.status(200).json(service);
   } catch (err) {
     res.status(500).json(err);
