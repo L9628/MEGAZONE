@@ -16,7 +16,6 @@ function Signup() {
   const handleSignup = () => {
     const { companyId, password, passwordCheck, companyName, email } =
       companyInfo;
-    console.log(companyInfo);
     if (!companyId || !password || !passwordCheck || !companyName || !email) {
       setErrMsg("모든 항목이 필수입니다.");
     } else if (password !== passwordCheck) {

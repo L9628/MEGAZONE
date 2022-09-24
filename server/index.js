@@ -17,14 +17,22 @@ mongoose
   .catch((err) => console.log(err));
 
 const corsOptions = {
-  origin: ["*", "http://localhost:3000"],
+  origin: [
+    "*",
+    "http://localhost:3000",
+    "http://megazone-hw.s3-website.ap-northeast-2.amazonaws.com",
+  ],
   credentials: true,
   method: ["GET", "POST", "DELETE", "PUT"],
 };
 
 app.use(function (req, res, next) {
   // Website you wish to allow to connect
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader(
+    "Access-Control-Allow-Origin",
+    "http://localhost:3000",
+    "http://megazone-hw.s3-website.ap-northeast-2.amazonaws.com"
+  );
 
   // Request methods you wish to allow
   res.setHeader(

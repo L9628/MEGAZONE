@@ -23,7 +23,6 @@ function Companies() {
     if (e === "") {
       let arr = [];
       for (let company of companies) {
-        console.log(company);
         arr.push(
           <tr>
             <td>{company.email}</td>
@@ -32,7 +31,6 @@ function Companies() {
           </tr>
         );
       }
-      console.log(arr);
       return arr;
     }
     let arr = [];
