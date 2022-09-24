@@ -24,7 +24,7 @@ function Signup() {
     } else {
       axios
         .post(
-          "/auth/signup",
+          process.env.REACT_APP_SERVER_URL + "/auth/signup",
           {
             companyId: companyId,
             companyName: companyName,

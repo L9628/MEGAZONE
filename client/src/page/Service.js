@@ -1,17 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { connect } from "react-redux";
 
-const mapStateToProps = (state) => {
-  return {
-    // companyId: state.companyId,
-  };
-};
 function Service() {
   const [service, setService] = useState([]);
   useEffect(() => {
     axios
-      .get("/services", {
+      .get(process.env.REACT_APP_SERVER_URL + "/services", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })
@@ -43,4 +37,4 @@ function Service() {
   );
 }
 
-export default connect(mapStateToProps)(Service);
+export default Service;

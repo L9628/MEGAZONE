@@ -5,10 +5,6 @@ import Purchase from "./Purchase";
 
 function Mypage({ companyInfo, handleLogout }) {
   const { companyName } = companyInfo;
-  const handleChargeCash = () => {
-    axios.post("http://localhost:5000/histories", {}).then(() => {});
-  };
-  const handleUseService = () => {};
 
   const [isCharge, setIsCharge] = useState(false);
   const [isPurchase, setIsPurchase] = useState(false);

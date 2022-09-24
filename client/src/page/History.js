@@ -5,7 +5,7 @@ function History() {
   const [histories, setHistories] = useState([]);
   useEffect(() => {
     axios
-      .get("/histories", {
+      .get(process.env.REACT_APP_SERVER_URL + "/histories", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

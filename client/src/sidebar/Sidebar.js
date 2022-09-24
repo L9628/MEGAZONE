@@ -17,7 +17,7 @@ function Sidebar() {
   };
   const handleLogout = () => {
     axios
-      .get("/auth/logout", {
+      .get(process.env.REACT_APP_SERVER_URL + "/auth/logout", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

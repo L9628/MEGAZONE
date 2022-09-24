@@ -1,12 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-
-const mapStateToProps = (state) => {
-  return {
-    // companyId: state.companyId,
-  };
-};
 
 function Purchase({ companyInfo }) {
   const [purchaseInfo, setPurchaseInfo] = useState({
@@ -50,10 +43,15 @@ function Purchase({ companyInfo }) {
   };
   useEffect(() => {
     axios
-      .get("/histories/" + companyInfo.companyId, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_SERVER_URL +
+          "/histories/" +
+          companyInfo.companyId,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         const data = res.data[res.data.length - 1];
         console.log(data);
@@ -76,10 +74,15 @@ function Purchase({ companyInfo }) {
   }, []);
   const handleOnPurchase = () => {
     axios
-      .get("/services/" + purchaseInfo.serviceName, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_SERVER_URL +
+          "/services/" +
+          purchaseInfo.serviceName,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         if (!res.data[0]) window.alert("올바른 서비스 이름을 입력해주세요");
         else if (history.currentCoin === 0)
@@ -88,7 +91,7 @@ function Purchase({ companyInfo }) {
           const coinDeducted = res.data[0].price;
           axios
             .post(
-              "/histories",
+              process.env.REACT_APP_SERVER_URL + "/histories",
               {
                 companyId: history.companyId,
                 currentCoin: Number(history.currentCoin) + Number(coinDeducted),
@@ -132,4 +135,4 @@ function Purchase({ companyInfo }) {
   );
 }
 
-export default connect(mapStateToProps)(Purchase);
+export default Purchase;

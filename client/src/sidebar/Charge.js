@@ -1,12 +1,5 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-
-const mapStateToProps = (state) => {
-  return {
-    // companyId: state.companyId,
-  };
-};
 
 function Charge({ companyInfo }) {
   const [chargeInfo, setChargeInfo] = useState({
@@ -49,10 +42,15 @@ function Charge({ companyInfo }) {
   const [refresh, setRefresh] = useState(true);
   useEffect(() => {
     axios
-      .get("/histories/" + companyInfo.companyId, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
+      .get(
+        process.env.REACT_APP_SERVER_URL +
+          "/histories/" +
+          companyInfo.companyId,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         const data = res.data[res.data.length - 1];
         setHistory({
@@ -81,7 +79,7 @@ function Charge({ companyInfo }) {
       if (history.lastUpdated === "") {
         axios
           .post(
-            "/histories",
+            process.env.REACT_APP_SERVER_URL + "/histories",
             {
               companyId: companyInfo.companyId,
               currentCoin:
@@ -113,7 +111,7 @@ function Charge({ companyInfo }) {
       } else {
         axios
           .post(
-            "/histories",
+            process.env.REACT_APP_SERVER_URL + "/histories",
             {
               companyId: companyInfo.companyId,
               currentCoin:
@@ -165,4 +163,4 @@ function Charge({ companyInfo }) {
   );
 }
 
-export default connect(mapStateToProps)(Charge);
+export default Charge;

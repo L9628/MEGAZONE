@@ -5,7 +5,7 @@ function Companies() {
   const [companies, setCompanies] = useState([]);
   useEffect(() => {
     axios
-      .get("/auth", {
+      .get(process.env.REACT_APP_SERVER_URL + "/auth", {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       })

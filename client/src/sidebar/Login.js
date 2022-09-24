@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { connect } from "react-redux";
-import action from "../redux/action";
 import { Link } from "react-router-dom";
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setCompanyId: (companyId) => dispatch(action.setCompanyId(companyId)),
-  };
-};
 
 function Login({ handleLoginSuccess }) {
   const [companyId, setCompanyId] = useState({
@@ -30,7 +22,7 @@ function Login({ handleLoginSuccess }) {
       setErrMsg("Company ID와 password를 입력해주세요.");
     } else {
       axios
-        .post("/auth/login", loginInfo, {
+        .post(process.env.REACT_APP_SERVER_URL + "/auth/login", loginInfo, {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         })
@@ -70,4 +62,4 @@ function Login({ handleLoginSuccess }) {
     </div>
   );
 }
-export default connect(null, mapDispatchToProps)(Login);
+export default Login;
